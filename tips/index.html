@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tip Line — Milwaukee NNS Education | Alex Klaus</title>
+<meta name="description" content="Send a confidential news tip to Alex Klaus, education solutions reporter at Milwaukee Neighborhood News Service.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ===================== DESIGN TOKENS (matches portfolio) ===================== */
+  :root{
+    --bg:            #1F3A2E;
+    --surface:       #16221c;
+    --surface-raised:#25332c;
+    --cream:         #f4efe4;
+    --body:          #c4ccc2;
+    --body-muted:    #b3bcb2;
+    --meta:          #7f8a81;
+    --gold:          #d9ab52;
+    --on-gold:       #18211c;
+    --hairline:      rgba(255,255,255,.09);
+    --brick:         #b5573d; /* error / caution accent, from the reference palette */
+
+    --radius-card: 16px;
+    --radius-pill: 999px;
+
+    --font-serif: 'Source Serif 4', serif;
+    --font-sans:  'Public Sans', sans-serif;
+    --font-mono:  'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  a { text-decoration:none; color:inherit; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 2px;
+  }
+  .visually-hidden{
+    position:absolute; width:1px; height:1px; overflow:hidden;
+    clip:rect(0 0 0 0); white-space:nowrap;
+  }
+  .hidden { display:none !important; }
+
+  .wrap { width:100%; max-width:640px; margin:0 auto; padding:0 26px; }
+
+  /* ===================== HEADER ===================== */
+  .tip-header { padding-top:48px; }
+  .brand-name {
+    display:inline-block; color: var(--cream); font-family: var(--font-serif);
+    font-size:28px; font-weight:700; letter-spacing:-0.01em; transition:color .15s ease;
+  }
+  .brand-name:hover { color: var(--gold); }
+  .brand-subtitle {
+    color: var(--gold); font-size:13px; font-weight:600;
+    letter-spacing:.05em; margin-top:6px; text-transform:uppercase;
+  }
+  .rule { height:1px; background: var(--hairline); margin:26px 0 36px; }
+
+  /* ===================== HERO ===================== */
+  .tip-hero {
+    margin:0; color: var(--cream); font-family: var(--font-serif);
+    font-size:clamp(1.75rem, 4vw + 0.6rem, 2.35rem); font-weight:700;
+    line-height:1.2; letter-spacing:-0.015em;
+  }
+  .tip-lede { margin:14px 0 0; color: var(--body); font-size:16.5px; line-height:1.6; }
+
+  .anon-note {
+    margin:22px 0 0; background: var(--surface); border-left:3px solid var(--gold);
+    border-radius: var(--radius-card); padding:16px 18px;
+    font-size:14px; line-height:1.55; color: var(--body-muted);
+  }
+
+  /* ===================== FORM CARD ===================== */
+  .card {
+    margin-top:28px; background: var(--surface); border-radius: var(--radius-card);
+    padding:30px 26px 28px;
+  }
+
+  .field-label {
+    display:block; font-family: var(--font-mono); font-size:11px;
+    letter-spacing:.06em; text-transform:uppercase; color: var(--meta); margin-bottom:8px;
+  }
+  .field-label .opt {
+    text-transform:none; letter-spacing:0; color: var(--meta); opacity:.75;
+    font-family: var(--font-sans); font-size:11.5px;
+  }
+
+  .tip-textarea {
+    display:block; width:100%; min-height:168px; resize:vertical;
+    background: var(--surface-raised); border:1px solid transparent; border-radius:12px;
+    font-family: var(--font-sans); font-size:15.5px; line-height:1.6;
+    color: var(--cream); padding:14px 16px; outline:none;
+    transition: border-color .15s ease;
+  }
+  .tip-textarea::placeholder { color: var(--meta); }
+  .tip-textarea:focus { border-color: var(--gold); }
+
+  .field { margin-top:18px; }
+  .field input {
+    width:100%; background: var(--surface-raised); border:1px solid transparent;
+    border-radius:10px; padding:11px 14px; font-size:15px; font-family: var(--font-sans);
+    color: var(--cream); outline:none; transition:border-color .15s ease;
+  }
+  .field input::placeholder { color: var(--meta); }
+  .field input:focus { border-color: var(--gold); }
+
+  .error-msg { font-size:13.5px; color: var(--brick); margin:10px 0 0; }
+
+  .divider { display:flex; align-items:center; gap:10px; margin:28px 0 4px; }
+  .divider::before, .divider::after { content:""; flex:1; height:1px; background: var(--hairline); }
+  .divider span {
+    font-family: var(--font-mono); font-size:10.5px; letter-spacing:.06em;
+    text-transform:uppercase; color: var(--meta); white-space:nowrap;
+  }
+
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; }
+  @media (max-width:460px) { .row { grid-template-columns:1fr; } }
+
+  .tip-submit {
+    display:inline-flex; align-items:center; gap:9px; margin-top:22px;
+    background: var(--gold); color: var(--on-gold); border:none;
+    font-family: var(--font-sans); font-size:15px; font-weight:700;
+    padding:13px 24px; border-radius: var(--radius-pill); cursor:pointer;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .tip-submit:hover { background:#e6bd6c; transform:translateY(-1px); }
+  .tip-submit:disabled { opacity:.7; cursor:default; transform:none; }
+  .stamp-dot { width:7px; height:7px; border-radius:50%; background: var(--on-gold); opacity:.55; }
+
+  .reassure { font-size:12.5px; color: var(--meta); margin:14px 0 0; }
+
+  /* ===================== CONFIRMATION CARD ===================== */
+  .confirm { text-align:center; padding:44px 26px; }
+  .confirm h2 {
+    font-family: var(--font-serif); color: var(--cream); font-size:2rem;
+    font-weight:700; margin:0 0 10px;
+  }
+  .confirm p { color: var(--body-muted); font-size:14.5px; margin:0 0 4px; line-height:1.55; }
+  .refnum {
+    display:inline-block; margin:20px 0 24px; border:1.5px solid var(--gold);
+    color: var(--gold); font-family: var(--font-mono); font-size:12.5px;
+    letter-spacing:.06em; padding:9px 18px; border-radius: var(--radius-pill);
+  }
+  .ghost-btn {
+    display:block; margin:0 auto; background:none; border:1.5px solid var(--hairline);
+    color: var(--cream); font-family: var(--font-sans); font-size:14px;
+    padding:11px 20px; border-radius: var(--radius-pill); cursor:pointer;
+    transition: border-color .15s ease;
+  }
+  .ghost-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ===================== FOOTER ===================== */
+  .tip-footer { margin-top:40px; padding:0 0 56px; text-align:center; }
+  .tip-footer a { color: var(--meta); font-size:13.5px; }
+  .tip-footer a:hover { color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="visually-hidden" href="#main">Skip to content</a>
+
+<header class="tip-header">
+  <div class="wrap">
+    <a class="brand-name" href="https://alexrklaus.com/">Alex Klaus</a>
+    <div class="brand-subtitle">Tip Line &middot; Milwaukee Neighborhood News Service</div>
+    <div class="rule"></div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+
+    <h1 class="tip-hero">Got education news? I want to hear it.</h1>
+    <p class="tip-lede">I want to know what is and isn&rsquo;t working in Milwaukee education. Got a tip you&rsquo;d like to share? Drop it below.</p>
+    <p class="anon-note">You can send this anonymously &mdash; the name and contact fields are optional. If you leave contact info, I may reach out to learn more, and I&rsquo;ll never publish your name without asking.</p>
+
+    <div class="card" id="formCard">
+      <form id="tipForm" novalidate>
+        <label class="field-label" for="tip">Your tip</label>
+        <textarea id="tip" class="tip-textarea" placeholder="A teacher at ... told me that ...&#10;Parents at ... are worried about ...&#10;I noticed that ...&#10;I&rsquo;m excited about ... at my school"></textarea>
+        <p class="error-msg hidden" id="tipError">Tell me at least a little about what&rsquo;s going on before sending.</p>
+
+        <div class="field">
+          <label class="field-label" for="place">School, neighborhood, or program <span class="opt">(optional)</span></label>
+          <input type="text" id="place" placeholder="e.g. MPS Lincoln Ave., Sherman Park, a Head Start program">
+        </div>
+
+        <div class="divider"><span>Want me to follow up?</span></div>
+
+        <div class="row">
+          <div class="field">
+            <label class="field-label" for="name">Your name</label>
+            <input type="text" id="name" placeholder="Optional">
+          </div>
+          <div class="field">
+            <label class="field-label" for="contact">Email or phone</label>
+            <input type="text" id="contact" placeholder="Optional">
+          </div>
+        </div>
+
+        <!-- honeypot: real visitors never see or fill this; bots often do -->
+        <input type="text" id="gotcha" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off">
+
+        <button type="submit" class="tip-submit" id="submitBtn">Send tip <span class="stamp-dot"></span></button>
+        <p class="reassure">I read every tip myself. You don&rsquo;t need to sign in or share who you are.</p>
+      </form>
+    </div>
+
+    <div class="card confirm hidden" id="confirmCard">
+      <h2>Got it.</h2>
+      <p>Thank you &mdash; this stays between us unless you said otherwise.</p>
+      <p>If it&rsquo;s urgent, please don&rsquo;t wait on me &mdash; contact the school or the right authority directly.</p>
+      <div class="refnum" id="refNum"></div>
+      <button id="anotherTip" class="ghost-btn">Send another tip</button>
+    </div>
+
+  </div>
+</main>
+
+<footer class="tip-footer">
+  <a href="https://alexrklaus.com/">&larr; Back to alexrklaus.com</a>
+</footer>
+
+<script>
+  // ---- Formspree endpoint ----
+  // Sign up free at formspree.io, create a form, and paste its endpoint
+  // below (looks like https://formspree.io/f/xxxxxxxx). Nothing will send
+  // until this is a real endpoint.
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mykqbdlo';
+
+  const tipForm = document.getElementById('tipForm');
+  const tipField = document.getElementById('tip');
+  const tipError = document.getElementById('tipError');
+  const submitBtn = document.getElementById('submitBtn');
+  const formCard = document.getElementById('formCard');
+  const confirmCard = document.getElementById('confirmCard');
+  const refNum = document.getElementById('refNum');
+  const anotherTip = document.getElementById('anotherTip');
+  const gotcha = document.getElementById('gotcha');
+
+  function makeRef(){
+    return Math.floor(1000 + Math.random() * 9000);
+  }
+  function formatDate(ts){
+    return new Date(ts).toLocaleString('en-US', {
+      month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit'
+    });
+  }
+
+  tipForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // honeypot tripped — pretend it worked, don't actually send
+    if (gotcha.value){
+      formCard.classList.add('hidden');
+      confirmCard.classList.remove('hidden');
+      return;
+    }
+
+    const tip = tipField.value.trim();
+    if (!tip){
+      tipError.classList.remove('hidden');
+      tipField.focus();
+      return;
+    }
+    if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')){
+      tipError.textContent = 'This form isn\'t connected yet — add your Formspree endpoint in the code.';
+      tipError.classList.remove('hidden');
+      return;
+    }
+    tipError.classList.add('hidden');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const record = {
+      tip: tip,
+      place: document.getElementById('place').value.trim(),
+      name: document.getElementById('name').value.trim(),
+      contact: document.getElementById('contact').value.trim(),
+      ts: Date.now(),
+      ref: makeRef()
+    };
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          'Tip': record.tip,
+          'School / neighborhood / program': record.place || '(not provided)',
+          'Name': record.name || '(not provided)',
+          'Email or phone': record.contact || '(not provided)',
+          'Reference code': record.ref,
+          'Submitted': formatDate(record.ts)
+        })
+      });
+      if (!res.ok) throw new Error('bad response');
+      refNum.textContent = 'FILED ' + formatDate(record.ts).toUpperCase() + ' · REF ' + record.ref;
+      formCard.classList.add('hidden');
+      confirmCard.classList.remove('hidden');
+      tipForm.reset();
+    } catch (err) {
+      tipError.textContent = 'Something went wrong sending this. Please try again in a moment.';
+      tipError.classList.remove('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send tip <span class="stamp-dot"></span>';
+    }
+  });
+
+  anotherTip.addEventListener('click', () => {
+    confirmCard.classList.add('hidden');
+    formCard.classList.remove('hidden');
+    tipField.focus();
+  });
+</script>
+</body>
+</html>

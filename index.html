@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alex Klaus — Education Solutions Reporter</title>
+<meta name="description" content="Education solutions reporter at Milwaukee Neighborhood News Service, covering Milwaukee schools from early childhood through adult education.">
+
+<!-- Social preview tags — swap og:image for a real 1200x630 photo when you have one -->
+<meta property="og:title" content="Alex Klaus — Education Solutions Reporter">
+<meta property="og:description" content="Covering education in Milwaukee, early childhood through adult ed, with a solutions lens.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alexrklaus.com/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ===================== DESIGN TOKENS ===================== */
+  :root{
+    --bg:            #1F3A2E; /* site background */
+    --surface:       #16221c; /* cards, recognition, data/about panels */
+    --surface-raised:#25332c; /* chips, icon squares, nav pill track */
+    --thumb-base:    #2a3b32;
+    --cream:         #f4efe4; /* headings */
+    --body:          #c4ccc2; /* primary body */
+    --body-muted:    #b3bcb2; /* secondary body */
+    --meta:          #7f8a81; /* dates, low emphasis */
+    --gold:          #d9ab52; /* accent */
+    --on-gold:       #18211c; /* text on gold */
+    --hairline:      rgba(255,255,255,.09);
+    --icon-fg:       #a7b3aa;
+
+    --radius-card: 16px;
+    --radius-chip: 7px;
+    --radius-icon: 8px;
+    --radius-pill: 999px;
+
+    --font-serif: 'Source Serif 4', serif;
+    --font-sans:  'Public Sans', sans-serif;
+    --font-mono:  'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; }
+  img { display:block; max-width:100%; }
+  section, footer { scroll-margin-top: 24px; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+  .visually-hidden{
+    position:absolute; width:1px; height:1px; overflow:hidden;
+    clip:rect(0 0 0 0); white-space:nowrap;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
+
+  /* ===================== HEADER ===================== */
+  .site-header { padding-top: 48px; }
+  .header-row {
+    display:flex; justify-content:space-between; align-items:center; gap:24px;
+  }
+  .brand-name {
+    color: var(--cream); font-family: var(--font-serif);
+    font-size: 32px; font-weight:700; letter-spacing:-0.01em; margin:0;
+  }
+  .brand-subtitle {
+    color: var(--gold); font-size:13px; font-weight:600;
+    letter-spacing:.05em; margin-top:6px; text-transform:uppercase;
+  }
+
+  nav.primary-nav { display:flex; gap:26px; }
+  nav.primary-nav a {
+    font-size:15px; font-weight:600; color: var(--icon-fg);
+    transition: color .15s ease;
+  }
+  nav.primary-nav a:hover { color: var(--cream); }
+  nav.primary-nav a.active { color: var(--cream); }
+
+  .header-right { display:flex; align-items:center; gap:22px; }
+  .header-divider { width:1px; height:22px; background: var(--hairline); }
+
+  .social-row { display:flex; gap:8px; }
+  .social-icon {
+    width:32px; height:32px; border-radius: var(--radius-icon);
+    background: var(--surface-raised); display:flex; align-items:center; justify-content:center;
+    color: var(--icon-fg); transition: color .15s ease, background .15s ease;
+  }
+  .social-icon:hover { color: var(--cream); background:#2c3d34; }
+
+  .nav-pill { display:none; } /* mobile-only, shown via media query */
+
+  .rule { height:1px; background: var(--hairline); margin: 26px 0 40px; }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    display:grid; grid-template-columns: 1.55fr 1fr; gap:56px; align-items:start;
+  }
+  .hero h1 {
+    margin:0; color: var(--cream); font-family: var(--font-serif);
+    font-size:46px; font-weight:700; line-height:1.14; letter-spacing:-0.02em;
+  }
+  .hero p {
+    margin:6px 0 0; color: var(--body); font-size:17px; line-height:1.65;
+  }
+
+  /* ===================== EYEBROW / SECTION LABEL ===================== */
+  .eyebrow {
+    color: var(--gold); font-size:12px; font-weight:700;
+    letter-spacing:.12em; text-transform:uppercase; margin:0;
+  }
+
+  /* ===================== ASSOCIATIONS ===================== */
+  .associations { margin-top:48px; }
+  .chip-row { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+  .chip {
+    background: var(--surface-raised); color: var(--body);
+    font-size:13.5px; padding:8px 14px; border-radius: var(--radius-chip);
+  }
+
+  /* ===================== RECOGNITION ===================== */
+  .recognition { margin-top:56px; }
+  .recognition-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:16px;
+  }
+  .recognition-item {
+    background: var(--surface); border-radius: var(--radius-card); padding:24px;
+  }
+  .recognition-year { color: var(--meta); font-size:13px; font-weight:600; letter-spacing:.04em; }
+  .recognition-title {
+    color: var(--cream); font-family: var(--font-serif); font-size:21px;
+    font-weight:600; line-height:1.28; margin-top:8px;
+  }
+  .recognition-desc { color: var(--body-muted); font-size:16px; line-height:1.55; margin-top:8px; }
+  .recognition-desc a { color: var(--gold); border-bottom:1px solid rgba(217,171,82,.35); }
+  .recognition-desc a:hover { border-bottom-color: var(--gold); }
+
+  /* ===================== MY REPORTING ===================== */
+  .reporting { margin-top:56px; }
+  .section-head {
+    display:flex; align-items:baseline; justify-content:space-between; margin-bottom:22px;
+  }
+  .section-head h2 {
+    margin:0; color: var(--cream); font-family: var(--font-serif); font-size:28px; font-weight:700;
+  }
+  .view-all { color: var(--gold); font-size:14px; font-weight:600; white-space:nowrap; }
+  .view-all:hover { text-decoration: underline; }
+
+  .card-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:22px; }
+  .article-card {
+    display:block; border-radius: var(--radius-card); overflow:hidden;
+    background: var(--surface); transition: transform .15s ease, background .15s ease;
+  }
+  .article-card:hover { transform: translateY(-2px); background:#182620; }
+  .article-thumb {
+    width:100%; height:220px; object-fit:cover; background: var(--thumb-base);
+  }
+  .article-body { padding:22px 22px 26px; }
+  .tag {
+    display:inline-block; background: var(--gold); color: var(--on-gold);
+    font-size:11px; font-weight:700; padding:4px 9px; border-radius:5px; letter-spacing:.03em;
+  }
+  .article-title {
+    color: var(--cream); font-family: var(--font-serif); font-size:21px;
+    font-weight:600; line-height:1.28; margin-top:14px;
+  }
+  .article-desc { color: var(--body-muted); font-size:16px; line-height:1.55; margin-top:8px; }
+  .article-date { color: var(--meta); font-size:13px; margin-top:16px; }
+
+  /* ===================== ABOUT ===================== */
+  .about { margin-top:56px; }
+  .about-panel {
+    margin-top:16px; background: var(--surface); border-left:3px solid var(--gold);
+    border-radius: var(--radius-card); padding:28px 30px;
+  }
+  .about-panel p { color: var(--body); font-size:17px; line-height:1.65; margin:0 0 14px; }
+  .about-panel p:last-child { margin-bottom:0; }
+  .tip-button {
+    display:inline-flex; align-items:center; gap:8px; margin-top:18px;
+    background: var(--gold); color: var(--on-gold);
+    font-size:15px; font-weight:700; padding:12px 22px;
+    border-radius: var(--radius-pill);
+    transition: background .15s ease, transform .15s ease;
+  }
+  .tip-button:hover { background:#e6bd6c; transform:translateY(-1px); }
+
+  /* ===================== DATA REPORTING ===================== */
+  .data-section { margin-top:56px; }
+  .data-item { margin-top:20px; }
+  .data-item-title {
+    color: var(--cream); font-family: var(--font-serif); font-size:19px;
+    font-weight:600; line-height:1.3; margin:0 0 12px;
+  }
+  .data-embed {
+    background: var(--surface); border-left:3px solid var(--gold);
+    border-radius: var(--radius-card); padding:16px; overflow:hidden;
+  }
+  .data-embed img { border-radius: 10px; }
+
+  /* ===================== SOCIAL VIDEO ===================== */
+  .video-section { margin-top:56px; }
+  .video-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:24px; margin-top:20px; justify-items:center;
+  }
+  .video-item { width:100%; max-width:325px; }
+  .video-caption { color: var(--meta); font-size:13px; margin-bottom:10px; text-align:center; }
+  .video-cta { margin-top:28px; text-align:center; color: var(--body-muted); font-size:15px; }
+  .video-cta a { color: var(--gold); font-weight:600; }
+  .video-cta a:hover { text-decoration:underline; }
+
+  /* ===================== FOOTER ===================== */
+  .site-footer {
+    margin-top:72px; border-top:1px solid var(--hairline);
+    padding:32px 0 56px; text-align:center;
+  }
+  .footer-contact { color: var(--body-muted); font-size:14.5px; }
+  .footer-contact a { color: var(--gold); }
+  .footer-contact a:hover { text-decoration:underline; }
+  .footer-emails { margin-top:10px; color: var(--body-muted); font-size:14.5px; display:flex; flex-direction:column; gap:4px; }
+  .footer-emails a { color: var(--gold); }
+  .footer-emails a:hover { text-decoration:underline; }
+  .footer-emails .label { color: var(--meta); }
+  .footer-social { margin-top:14px; color: var(--meta); font-size:13.5px; }
+  .footer-social a { color: var(--gold); }
+  .footer-social a:hover { text-decoration:underline; }
+  .footer-social .sep { color: var(--meta); margin:0 8px; }
+
+  /* ===================== MOBILE (<800px) ===================== */
+  @media (max-width: 800px) {
+    .wrap { padding: 0 26px; }
+    .site-header { padding-top: 28px; }
+
+    .header-row { flex-direction:row; justify-content:space-between; align-items:flex-start; }
+    .brand-name { font-size:27px; }
+    .brand-subtitle { font-size:13px; letter-spacing:.04em; }
+    nav.primary-nav, .header-divider { display:none; } /* nav moves to pill below; divider no longer needed */
+    .header-right { gap:7px; }
+    .social-row { gap:7px; }
+    .social-icon { width:28px; height:28px; }
+
+    .nav-pill {
+      display:flex; gap:2px; margin-top:20px; background: var(--surface);
+      border-radius: var(--radius-pill); padding:4px;
+    }
+    .nav-pill a {
+      flex:1; text-align:center; color: var(--icon-fg); font-size:11.5px;
+      font-weight:600; padding:8px 2px; border-radius: var(--radius-pill);
+      transition: background .15s ease, color .15s ease;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .nav-pill a.active { background: var(--gold); color: var(--on-gold); }
+
+    .rule { margin: 22px 0 28px; }
+
+    .hero { grid-template-columns: 1fr; gap:16px; }
+    .hero h1 { font-size:30px; line-height:1.22; letter-spacing:-0.015em; }
+    .hero p { font-size:17px; line-height:1.62; }
+
+    .associations, .recognition, .reporting, .about, .data-section, .video-section {
+      margin-top:34px;
+    }
+
+    .chip { font-size:13px; padding:7px 12px; }
+
+    .recognition-grid {
+      grid-template-columns:1fr; gap:0; background: var(--surface);
+      border-radius: var(--radius-card); overflow:hidden;
+    }
+    .recognition-item { background:transparent; border-radius:0; padding:22px 20px; }
+    .recognition-item + .recognition-item { border-top:1px solid var(--hairline); }
+    .recognition-title { font-size:18px; }
+    .recognition-desc { font-size:15px; }
+
+    .section-head { margin:0 0 18px; }
+    .section-head h2 { font-size:22px; }
+    .view-all { font-size:13px; }
+
+    .card-grid { grid-template-columns:1fr; gap:18px; }
+    .article-thumb { height:180px; }
+    .article-body { padding:18px 18px 20px; }
+    .article-title { font-size:20px; margin-top:12px; }
+    .article-desc { font-size:16px; margin-top:7px; }
+    .article-date { margin-top:12px; }
+
+    .about-panel { padding:22px 20px; }
+    .about-panel p { font-size:16px; }
+
+    .site-footer { margin-top:48px; padding:28px 0 40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    * { transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<a class="visually-hidden" href="#main">Skip to content</a>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="wrap">
+
+    <!-- Header row: name+subtitle left, nav+social right (nav hides on mobile via CSS) -->
+    <div class="header-row">
+      <div>
+        <p class="brand-name">Alex Klaus</p>
+        <div class="brand-subtitle">Education Solutions Reporter &middot; Milwaukee Neighborhood News Service / Report for America</div>
+      </div>
+
+      <div class="header-right">
+        <nav class="primary-nav" aria-label="Primary">
+          <a href="#reporting" data-nav>Reporting</a>
+          <a href="#data" data-nav>Data</a>
+          <a href="#video" data-nav>Video</a>
+          <a href="#about" data-nav>About</a>
+          <a href="#contact" data-nav>Contact</a>
+        </nav>
+        <div class="header-divider"></div>
+        <div class="social-row">
+          <a class="social-icon" href="https://www.linkedin.com/in/alexrklaus/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.35c0-1.28-.02-2.92-1.78-2.92-1.78 0-2.05 1.39-2.05 2.82V21H9V9z"/></svg>
+          </a>
+          <a class="social-icon" href="https://www.instagram.com/alexrklaus/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="social-icon" href="https://www.facebook.com/alexrklaus" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.3C16.6 2.2 15.6 2 14.5 2 11.9 2 10.3 3.6 10.3 6.4v2.1H8v3h2.3V22H14v-10.5h2.6l.4-3H14z"/></svg>
+          </a>
+          <a class="social-icon" href="https://www.tiktok.com/@alexrklaus" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 2c.3 2.3 1.6 3.7 3.9 3.9v2.6c-1.3.1-2.5-.3-3.9-1.1v5.8c0 5.4-5.9 7.1-8.3 3.2-1.5-2.5-.6-6.9 4.3-7.1v2.7c-.4.1-.8.2-1.1.3-1.1.4-1.7 1.1-1.5 2.3.3 2.3 4.5 3 4.1-1.5V2h2.5z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav-pill" aria-label="Primary mobile">
+      <a href="#reporting" data-nav>Reporting</a>
+      <a href="#data" data-nav>Data</a>
+      <a href="#video" data-nav>Video</a>
+      <a href="#about" data-nav>About</a>
+      <a href="#contact" data-nav>Contact</a>
+    </nav>
+
+    <div class="rule"></div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <h1>Covering education in Milwaukee, early childhood through adult ed, with a solutions lens.</h1>
+      <p>I&rsquo;m an education solutions reporter at Milwaukee Neighborhood News Service and a Report for America corps member. My work has also appeared in Wisconsin Watch and Business Insider, and previously in Chalkbeat Detroit, Bridge Detroit, and Outlier Media.</p>
+    </section>
+
+    <!-- ===================== ASSOCIATIONS ===================== -->
+    <section class="associations">
+      <h2 class="eyebrow">Professional Associations</h2>
+      <div class="chip-row">
+        <span class="chip">Education Writers Association</span>
+        <span class="chip">Investigative Reporters &amp; Editors</span>
+        <span class="chip">Ida B. Wells Society</span>
+        <span class="chip">National Press Club</span>
+        <span class="chip">Society of Environmental Journalists</span>
+      </div>
+    </section>
+
+    <!-- ===================== MY REPORTING ===================== -->
+    <section id="reporting" class="reporting">
+      <div class="section-head">
+        <h2>My Reporting</h2>
+        <a class="view-all" href="https://milwaukeenns.org/author/aklaus/" target="_blank" rel="noopener noreferrer">View all &rarr;</a>
+      </div>
+
+      <div class="card-grid">
+        <a class="article-card" href="https://milwaukeenns.org/2026/06/21/local-childcare-centers-brace-for-state-funding-cuts-study-finds-that-many-may-close-as-a-result/" target="_blank" rel="noopener noreferrer">
+          <img class="article-thumb" src="https://i0.wp.com/milwaukeenns.org/wp-content/uploads/2026/06/G86A4715-scaled.jpg?fit=1200%2C800&ssl=1" alt="Childcare center" loading="lazy">
+          <div class="article-body">
+            <span class="tag">EARLY CHILDHOOD</span>
+            <div class="article-title">Local childcare centers brace for state funding cuts</div>
+            <div class="article-desc">Almost 1,400 Milwaukee centers will lose funding at June&rsquo;s end &mdash; a study finds many may close.</div>
+            <div class="article-date">Jun 2026</div>
+          </div>
+        </a>
+
+        <a class="article-card" href="https://milwaukeenns.org/2026/03/27/update-mps-board-approves-plan-to-move-deaf-and-hard-of-hearing-students-from-milwaukee-sign-language-school-to-neeskara/" target="_blank" rel="noopener noreferrer">
+          <img class="article-thumb" src="https://i0.wp.com/milwaukeenns.org/wp-content/uploads/2026/03/DSC_0138-scaled.jpg?fit=780%2C519&ssl=1" alt="Neeskara school" loading="lazy">
+          <div class="article-body">
+            <span class="tag">K&ndash;12</span>
+            <div class="article-title">MPS board approves move of deaf and hard-of-hearing students to Neeskara</div>
+            <div class="article-desc">Milwaukee Sign Language School will relocate next year following a board vote.</div>
+            <div class="article-date">Mar 2026</div>
+          </div>
+        </a>
+
+        <a class="article-card" href="https://milwaukeenns.org/2026/03/10/i-know-theyre-going-to-succeed-milwaukee-born-kericka-green-recognized-as-a-top-local-teacher/" target="_blank" rel="noopener noreferrer">
+          <img class="article-thumb" src="https://i0.wp.com/milwaukeenns.org/wp-content/uploads/2026/03/G86A6610-scaled.jpg?fit=1200%2C800&ssl=1" alt="Kericka Green" loading="lazy">
+          <div class="article-body">
+            <span class="tag">K&ndash;12</span>
+            <div class="article-title">&lsquo;I know they&rsquo;re going to succeed&rsquo;: Kericka Green named a top teacher</div>
+            <div class="article-desc">A Craig Montessori lower-elementary teacher on what drives her students forward.</div>
+            <div class="article-date">Mar 2026</div>
+          </div>
+        </a>
+
+        <a class="article-card" href="https://milwaukeenns.org/2025/09/17/milwaukee-sign-language-school-struggles-with-teacher-vacancies/" target="_blank" rel="noopener noreferrer">
+          <img class="article-thumb" src="https://i0.wp.com/milwaukeenns.org/wp-content/uploads/2025/09/DSC_0138-scaled.jpg?fit=780%2C519&ssl=1" alt="Milwaukee Sign Language School" loading="lazy">
+          <div class="article-body">
+            <span class="tag">K&ndash;12</span>
+            <div class="article-title">Milwaukee Sign Language School struggles with teacher vacancies</div>
+            <div class="article-desc">Staff shortages have created challenges supporting students and driven up burnout.</div>
+            <div class="article-date">Sep 2025</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="about">
+      <h2 class="eyebrow">About</h2>
+      <div class="about-panel">
+        <p>I wasn&rsquo;t diagnosed with my disability until I was in college. For most of school, I felt like a system that was supposed to help me had quietly decided I wasn&rsquo;t worth the effort. Now I report on education equity because I want the kids and families navigating that same system to have someone in their corner who&rsquo;ll tell them what&rsquo;s actually going on. I sit through the long meetings, dig through the complicated data, and translate the bureaucratic lingo &mdash; so you don&rsquo;t have to.</p>
+        <p>Before Milwaukee, I covered Detroit schools for Chalkbeat and city meetings for Detroit Documenters, where I helped pilot its Docu-Mentor initiative. I hold a B.A. in Urban Studies and Public History from Wayne State University.</p>
+      </div>
+      <a class="tip-button" href="https://alexrklaus.com/tips">Send a Tip &rarr;</a>
+    </section>
+
+    <!-- ===================== RECOGNITION ===================== -->
+    <section class="recognition">
+      <h2 class="eyebrow">National Recognition</h2>
+      <div class="recognition-grid">
+        <div class="recognition-item">
+          <div class="recognition-year">2026</div>
+          <div class="recognition-title">2nd place, Outstanding Student Reporting</div>
+          <div class="recognition-desc">
+            <a href="https://www.sej2026.org/awards#student" target="_blank" rel="noopener noreferrer">Society of Environmental Journalists</a>,
+            for coverage of <a href="https://www.bridgedetroit.com/detroit-salem-wayne-concrete-crushers/" target="_blank" rel="noopener noreferrer">Metro-Detroit concrete crushers</a>.
+          </div>
+        </div>
+        <div class="recognition-item">
+          <div class="recognition-year">2024</div>
+          <div class="recognition-title">Streetlight Detroit newsletter recognized</div>
+          <div class="recognition-desc">
+            Cited by Poynter&rsquo;s <a href="https://mailchi.mp/poynter/cx9kghijsw-4782132?e=0c26881c21" target="_blank" rel="noopener noreferrer">Local Edition</a>
+            and Harvard&rsquo;s <a href="https://www.niemanlab.org/2024/10/is-the-crime-news-people-crave-the-crime-news-they-need/" target="_blank" rel="noopener noreferrer">Nieman Lab</a>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DATA REPORTING ===================== -->
+    <section id="data" class="data-section">
+      <h2 class="eyebrow">Data Reporting</h2>
+
+      <div class="data-item">
+        <p class="data-item-title">Milwaukee childcare centers that received stabilization payments in 2026</p>
+        <div class="data-embed">
+          <div class="flourish-embed" data-src="visualisation/29535829">
+            <noscript><img src="https://public.flourish.studio/visualisation/29535829/thumbnail" width="100%" alt="Map: Milwaukee childcare stabilization payments 2026"></noscript>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-item">
+        <p class="data-item-title">Equity Department staff cuts in MPS</p>
+        <div class="data-embed">
+          <div class="flourish-embed" data-src="visualisation/29063585">
+            <noscript><img src="https://public.flourish.studio/visualisation/29063585/thumbnail" width="100%" alt="Pictogram: Equity Department staff cuts in MPS"></noscript>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-item">
+        <p class="data-item-title">Kindergarten-Serving Schools With Community Learning Centers</p>
+        <div class="data-embed">
+          <div class="flourish-embed" data-src="visualisation/27080008">
+            <noscript><img src="https://public.flourish.studio/visualisation/27080008/thumbnail" width="100%" alt="Map: Kindergarten-serving schools with community learning centers"></noscript>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOCIAL VIDEO ===================== -->
+    <section id="video" class="video-section">
+      <h2 class="eyebrow">Social Video</h2>
+      <div class="video-grid">
+
+        <div class="video-item">
+          <div class="video-caption">School fire on Milwaukee&rsquo;s South Side</div>
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alexrklaus/video/7657323614764600589" data-video-id="7657323614764600589" style="max-width:605px;min-width:325px;">
+            <section><a target="_blank" rel="noopener noreferrer" title="@alexrklaus" href="https://www.tiktok.com/@alexrklaus?refer=embed">@alexrklaus</a></section>
+          </blockquote>
+        </div>
+
+        <div class="video-item">
+          <div class="video-caption">Student mural project at Hamilton</div>
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alexrklaus/video/7649827106892893453" data-video-id="7649827106892893453" style="max-width:605px;min-width:325px;">
+            <section><a target="_blank" rel="noopener noreferrer" title="@alexrklaus" href="https://www.tiktok.com/@alexrklaus?refer=embed">@alexrklaus</a></section>
+          </blockquote>
+        </div>
+
+        <div class="video-item">
+          <div class="video-caption">MPS budget and equity program cuts</div>
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alexrklaus/video/7645319187526700302" data-video-id="7645319187526700302" style="max-width:605px;min-width:325px;">
+            <section><a target="_blank" rel="noopener noreferrer" title="@alexrklaus" href="https://www.tiktok.com/@alexrklaus?refer=embed">@alexrklaus</a></section>
+          </blockquote>
+        </div>
+
+        <div class="video-item">
+          <div class="video-caption">Childcare stabilization funding cliff</div>
+          <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@alexrklaus/video/7656868486932630797" data-video-id="7656868486932630797" style="max-width:605px;min-width:325px;">
+            <section><a target="_blank" rel="noopener noreferrer" title="@alexrklaus" href="https://www.tiktok.com/@alexrklaus?refer=embed">@alexrklaus</a></section>
+          </blockquote>
+        </div>
+
+      </div>
+      <p class="video-cta">New videos weekly &mdash; follow on <a href="https://www.tiktok.com/@alexrklaus" target="_blank" rel="noopener noreferrer">TikTok</a>.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-contact">
+      Alex Klaus &middot; Milwaukee, WI
+    </div>
+    <a class="tip-button" href="https://alexrklaus.com/tips">Send a Tip &rarr;</a>
+    <div class="footer-emails">
+      <div><span class="label">Everything else</span> &middot; <a href="mailto:alexrklaus@gmail.com">alexrklaus@gmail.com</a></div>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.tiktok.com/@alexrklaus" target="_blank" rel="noopener noreferrer">TikTok</a><span class="sep">&middot;</span>
+      <a href="https://www.instagram.com/alexrklaus/" target="_blank" rel="noopener noreferrer">Instagram</a><span class="sep">&middot;</span>
+      <a href="https://www.linkedin.com/in/alexrklaus/" target="_blank" rel="noopener noreferrer">LinkedIn</a><span class="sep">&middot;</span>
+      <a href="https://www.facebook.com/alexrklaus" target="_blank" rel="noopener noreferrer">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== NAV SCROLLSPY ===================== -->
+<script>
+  (function(){
+    var sections = ['reporting','data','video','about','contact'].map(function(id){
+      return document.getElementById(id);
+    }).filter(Boolean);
+    var navLinks = document.querySelectorAll('[data-nav]');
+
+    function setActive(id){
+      navLinks.forEach(function(a){
+        var match = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('active', match);
+      });
+    }
+
+    if ('IntersectionObserver' in window && sections.length) {
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+      sections.forEach(function(s){ observer.observe(s); });
+    }
+
+    // Fallback: short footer means the observer band may never reach it once
+    // the page hits max scroll, so force Contact active at the very bottom.
+    window.addEventListener('scroll', function(){
+      var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (atBottom) setActive('contact');
+    }, { passive: true });
+
+    // Default active state on load
+    setActive('reporting');
+  })();
+</script>
+
+<!-- Third-party embed scripts -->
+<script async src="https://public.flourish.studio/resources/embed.js"></script>
+<script async src="https://www.tiktok.com/embed.js"></script>
+
+</body>
+</html>
